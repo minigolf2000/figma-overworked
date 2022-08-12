@@ -13,6 +13,7 @@ import { movement, MovementMode, movementMode } from './movement_🛑'
 import { animatedArt } from './animated_art_⏱'
 import { midpoint } from './vector'
 import { home, homePropertyMenuItem } from './home_🏠'
+import { station } from './station_💻'
 
 const FPS = 30
 
@@ -31,6 +32,7 @@ const animatedArtIds: string[] = []
 const collisionRects: Rect[] = []
 const homeRects: Rect[] = []
 const bikeZoneRects: Rect[] = []
+const stationRects: Rect[] = []
 
 function gatherNodes() {
   const nodes = figma.currentPage.findAll(() => true)
@@ -50,6 +52,10 @@ function gatherNodes() {
     }
     if (nodeName.slice(0, 2) === '🚲') {
       bikeZoneRects.push(n)
+    }
+    if (nodeName.slice(0, 2) === '💻') {
+      stationRects.push(n)
+      collisionRects.push(n)
     }
   }
 }
@@ -140,6 +146,7 @@ function Widget() {
       )
       bikeZone(widgetRect, bikeZoneRects)
       home(widgetRect, homeRects, setAtHome)
+      station(widgetRect, stationRects)
     }, 1000 / FPS)
 
     figma.on('close', () => {
@@ -193,3 +200,4 @@ function Widget() {
   )
 }
 widget.register(Widget)
+
